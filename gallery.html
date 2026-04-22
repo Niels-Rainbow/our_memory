@@ -1,0 +1,1258 @@
+<!doctype html>
+<html class="dark" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Manrope:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-dim": "#12121f",
+              "surface-container-lowest": "#0d0d19",
+              "surface-bright": "#383846",
+              "on-secondary": "#30009b",
+              "inverse-surface": "#e3e0f3",
+              "tertiary-container": "#63a900",
+              "on-secondary-fixed-variant": "#4617cb",
+              "on-primary-container": "#5f004a",
+              "primary-fixed-dim": "#ffaede",
+              "secondary-fixed-dim": "#c9beff",
+              "surface-variant": "#343341",
+              "tertiary-fixed-dim": "#90da3f",
+              "primary-container": "#ff4ecd",
+              "on-primary-fixed-variant": "#87006a",
+              "surface-tint": "#ffaede",
+              primary: "#ffaede",
+              "tertiary-fixed": "#abf859",
+              "inverse-primary": "#b1008c",
+              "inverse-on-surface": "#2f2f3d",
+              tertiary: "#90da3f",
+              "secondary-container": "#491ccd",
+              "surface-container-low": "#1a1a27",
+              "surface-container-high": "#292936",
+              secondary: "#c9beff",
+              surface: "#12121f",
+              "on-surface": "#e3e0f3",
+              "outline-variant": "#56404d",
+              "on-tertiary-container": "#1c3600",
+              error: "#ffb4ab",
+              "on-primary": "#60004b",
+              "primary-fixed": "#ffd8ec",
+              "on-tertiary": "#1d3700",
+              "error-container": "#93000a",
+              "secondary-fixed": "#e6deff",
+              "surface-container-highest": "#343341",
+              "surface-container": "#1f1e2b",
+              "on-primary-fixed": "#3b002d",
+              "on-surface-variant": "#dcbecd",
+              "on-secondary-fixed": "#1b0062",
+              outline: "#a48997",
+              "on-error": "#690005",
+              "on-tertiary-fixed": "#0e2000",
+              "on-error-container": "#ffdad6",
+              "on-secondary-container": "#bbaeff",
+              "on-tertiary-fixed-variant": "#2c5000",
+              "on-background": "#e3e0f3",
+              background: "#12121f",
+            },
+            borderRadius: {
+              DEFAULT: "1rem",
+              lg: "2rem",
+              xl: "3rem",
+              full: "9999px",
+            },
+            fontFamily: {
+              headline: ["Noto Serif"],
+              body: ["Manrope"],
+              label: ["Manrope"],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      .glass-panel {
+        backdrop-filter: blur(20px);
+        background: rgba(18, 18, 31, 0.8);
+        border: 1px solid rgba(255, 78, 205, 0.1);
+      }
+      .cursor-ripple {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        background: radial-gradient(circle, #ff4ecd, #7a5cff);
+        box-shadow:
+          0 0 10px #ff4ecd,
+          0 0 20px #7a5cff,
+          0 0 40px #ff4ecd;
+        transform: translate(-50%, -50%);
+        transition: transform 0.08s ease-out;
+      }
+      .ripple-click {
+        animation: rippleEffect 0.6s ease-out;
+      }
+      @keyframes rippleEffect {
+        0% {
+          transform: translate(-50%, -50%) scale(1);
+          opacity: 1;
+        }
+        100% {
+          transform: translate(-50%, -50%) scale(4);
+          opacity: 0;
+        }
+      }
+
+      /* Gallery Grid */
+      .masonry-grid {
+        columns: 3;
+        column-gap: 1.25rem;
+      }
+      @media (max-width: 1024px) {
+        .masonry-grid {
+          columns: 2;
+        }
+      }
+      @media (max-width: 640px) {
+        .masonry-grid {
+          columns: 1;
+        }
+      }
+
+      .gallery-item {
+        break-inside: avoid;
+        margin-bottom: 1.25rem;
+        position: relative;
+        overflow: hidden;
+        border-radius: 1rem;
+        cursor: pointer;
+      }
+      .gallery-item img {
+        width: 100%;
+        display: block;
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .gallery-item:hover img {
+        transform: scale(1.08);
+      }
+      .gallery-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to top,
+          rgba(18, 18, 31, 0.92) 0%,
+          rgba(122, 92, 255, 0.15) 60%,
+          transparent 100%
+        );
+        opacity: 0;
+        transition: opacity 0.4s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 1.5rem;
+      }
+      .gallery-item:hover .gallery-overlay {
+        opacity: 1;
+      }
+      .gallery-item .neon-border {
+        position: absolute;
+        inset: 0;
+        border-radius: 1rem;
+        border: 1px solid rgba(255, 78, 205, 0);
+        transition:
+          border-color 0.4s ease,
+          box-shadow 0.4s ease;
+        pointer-events: none;
+      }
+      .gallery-item:hover .neon-border {
+        border-color: rgba(255, 78, 205, 0.5);
+        box-shadow:
+          inset 0 0 20px rgba(255, 78, 205, 0.07),
+          0 0 30px rgba(255, 78, 205, 0.15);
+      }
+
+      /* Filter Pills */
+      .filter-pill {
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+      .filter-pill.active {
+        background: linear-gradient(135deg, #ff4ecd, #7a5cff);
+        color: #12121f;
+        border-color: transparent;
+        box-shadow: 0 0 20px rgba(255, 78, 205, 0.3);
+      }
+
+      /* Lightbox */
+      .lightbox {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 200;
+        background: rgba(10, 10, 20, 0.95);
+        backdrop-filter: blur(30px);
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+      .lightbox.open {
+        display: flex;
+        animation: fadeIn 0.3s ease;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      .lightbox img {
+        max-width: 85vw;
+        max-height: 75vh;
+        border-radius: 1.5rem;
+        box-shadow:
+          0 0 60px rgba(255, 78, 205, 0.2),
+          0 0 120px rgba(122, 92, 255, 0.1);
+        object-fit: contain;
+      }
+
+      /* Page entry animation */
+      .gallery-item {
+        animation: slideUp 0.5s ease both;
+      }
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .gallery-item:nth-child(1) {
+        animation-delay: 0.05s;
+      }
+      .gallery-item:nth-child(2) {
+        animation-delay: 0.1s;
+      }
+      .gallery-item:nth-child(3) {
+        animation-delay: 0.15s;
+      }
+      .gallery-item:nth-child(4) {
+        animation-delay: 0.2s;
+      }
+      .gallery-item:nth-child(5) {
+        animation-delay: 0.25s;
+      }
+      .gallery-item:nth-child(6) {
+        animation-delay: 0.3s;
+      }
+      .gallery-item:nth-child(7) {
+        animation-delay: 0.35s;
+      }
+      .gallery-item:nth-child(8) {
+        animation-delay: 0.4s;
+      }
+
+      /* Hidden items for filter */
+      .gallery-item.hidden {
+        display: none;
+      }
+
+      /* Search bar glow */
+      #search-input:focus {
+        outline: none;
+        border-color: rgba(255, 78, 205, 0.6);
+        box-shadow: 0 0 20px rgba(255, 78, 205, 0.15);
+      }
+    </style>
+  </head>
+  <body class="bg-background text-on-surface font-body overflow-x-hidden">
+    <!-- Top Navigation Bar -->
+   <div id="navbar"></div>
+
+    <!-- Side Navigation Bar -->
+    <aside
+      class="hidden md:flex fixed left-0 top-0 h-full w-20 hover:w-64 transition-all duration-500 z-40 bg-[#12121f]/90 backdrop-blur-2xl flex-col py-8 shadow-[10px_0_30px_rgba(122,92,255,0.04)] group"
+    >
+      <div class="flex flex-col items-center gap-12 mt-16 w-full">
+        <div
+          class="flex flex-col items-center gap-1 w-full px-4 group-hover:items-start group-hover:px-8"
+        >
+          <div
+            class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center mb-2"
+          >
+            <span class="material-symbols-outlined text-on-secondary-container"
+              >auto_awesome</span
+            >
+          </div>
+          <p
+            class="hidden group-hover:block font-label uppercase tracking-widest text-[8px] text-[#e3e0f3]/40"
+          >
+            My Moments
+          </p>
+        </div>
+        <div class="flex flex-col w-full gap-4">
+          <a
+            href="index.html"
+            class="flex items-center gap-4 w-full px-6 py-3 text-[#e3e0f3]/40 hover:text-[#ff4ecd] hover:bg-[#7a5cff]/10 transition-all duration-300"
+          >
+            <span class="material-symbols-outlined">auto_awesome</span>
+            <span
+              class="hidden group-hover:block font-label uppercase tracking-widest text-[10px]"
+              >Home</span
+            >
+          </a>
+          <div
+            class="flex items-center gap-4 w-full px-6 py-3 text-[#ff4ecd] bg-[#ff4ecd]/5 border-r-4 border-[#ff4ecd]"
+          >
+            <span class="material-symbols-outlined">photo_library</span>
+            <span
+              class="hidden group-hover:block font-label uppercase tracking-widest text-[10px]"
+              >Gallery</span
+            >
+          </div>
+          <div
+            class="flex items-center gap-4 w-full px-6 py-3 text-[#e3e0f3]/40 hover:text-[#ff4ecd] hover:bg-[#7a5cff]/10 transition-all duration-300"
+          >
+            <span class="material-symbols-outlined">palette</span>
+            <span
+              class="hidden group-hover:block font-label uppercase tracking-widest text-[10px]"
+              >Library</span
+            >
+          </div>
+          <div
+            class="flex items-center gap-4 w-full px-6 py-3 text-[#e3e0f3]/40 hover:text-[#ff4ecd] hover:bg-[#7a5cff]/10 transition-all duration-300"
+          >
+            <span class="material-symbols-outlined">settings</span>
+            <span
+              class="hidden group-hover:block font-label uppercase tracking-widest text-[10px]"
+              >Settings</span
+            >
+          </div>
+        </div>
+      </div>
+      <div class="mt-auto px-4 w-full">
+        <button
+          onclick="
+            document.getElementById('upload-modal').classList.add('open')
+          "
+          class="w-full py-4 rounded-full bg-gradient-to-r from-[#ff4ecd] to-[#7a5cff] text-[#12121f] font-bold text-[10px] uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        >
+          Upload Moment
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Gallery Page -->
+    <main class="pl-0 md:pl-20 pt-28 pb-24 px-6 md:px-10 lg:px-16">
+      <!-- Gallery Header -->
+      <div class="mb-5 pl-2">
+        <div
+          class="flex items-center justify-center min-h-[30vh] md:min-h-[35vh] text-center pt-10"
+        >
+          <div class="max-w-2xl">
+            <h1
+              class="font-headline text-5xl md:text-6xl font-bold italic mb-6 leading-tight"
+            >
+              Every Moment In <br />
+              <span
+                class="text-transparent bg-clip-text bg-gradient-to-r from-[#ff4ecd] to-[#7a5cff]"
+                >Our Collection💖</span
+              >
+            </h1>
+            <p
+              class="text-on-surface-variant font-headline italic text-lg max-w-xl mx-auto"
+            >
+              "Some moments are too beautiful to live only once."
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controls: Search + Filter + View Toggle -->
+      <div
+        class="flex flex-col md:flex-row gap-4 mb-10 items-start md:items-center justify-between"
+      >
+        <!-- Search -->
+        <div class="relative w-full md:w-72">
+          <span
+            class="material-symbols-outlined absolute left-8 top-1/2 -translate-y-1/2 text-[#e3e0f3]/40 text-[20px]"
+            >search</span
+          >
+          <input
+            id="search-input"
+            type="text"
+            placeholder="Search moments…"
+            class="w-full bg-[#1f1e2b] border border-[#ff4ecd]/20 rounded-full pl-12 pr-5 py-3 text-sm text-[#e3e0f3] placeholder-[#e3e0f3]/30 transition-all duration-300"
+          />
+        </div>
+
+        <!-- Filters -->
+        <div class="flex flex-wrap gap-3" id="filter-container">
+          <button
+            class="filter-pill active px-5 py-2 rounded-full text-xs font-label uppercase tracking-widest border border-[#ff4ecd]/30 text-[#e3e0f3]"
+            data-filter="all"
+          >
+            All
+          </button>
+          <button
+            class="filter-pill px-5 py-2 rounded-full text-xs font-label uppercase tracking-widest border border-[#ff4ecd]/20 text-[#e3e0f3]/60"
+            data-filter="us"
+          >
+            Us Together
+          </button>
+          <button
+            class="filter-pill px-5 py-2 rounded-full text-xs font-label uppercase tracking-widest border border-[#ff4ecd]/20 text-[#e3e0f3]/60"
+            data-filter="you"
+          >
+            Just You
+          </button>
+          <button
+            class="filter-pill px-5 py-2 rounded-full text-xs font-label uppercase tracking-widest border border-[#ff4ecd]/20 text-[#e3e0f3]/60"
+            data-filter="places"
+          >
+            Places
+          </button>
+          <button
+            class="filter-pill px-5 py-2 rounded-full text-xs font-label uppercase tracking-widest border border-[#ff4ecd]/20 text-[#e3e0f3]/60"
+            data-filter="vibes"
+          >
+            Vibes
+          </button>
+        </div>
+
+        <!-- View Toggle + Count -->
+        <div class="flex items-center gap-3">
+          <span
+            id="photo-count"
+            class="text-[#e3e0f3]/40 text-xs font-label uppercase tracking-widest"
+            >8 Moments</span
+          >
+          <button
+            id="view-masonry"
+            onclick="setView('masonry')"
+            class="p-2 rounded-lg bg-[#ff4ecd]/10 text-[#ff4ecd]"
+          >
+            <span class="material-symbols-outlined text-[20px]">dashboard</span>
+          </button>
+          <button
+            id="view-grid"
+            onclick="setView('grid')"
+            class="p-2 rounded-lg hover:bg-[#ff4ecd]/10 text-[#e3e0f3]/40 transition-colors"
+          >
+            <span class="material-symbols-outlined text-[20px]">grid_on</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Masonry Gallery -->
+      <div class="masonry-grid" id="gallery-masonry">
+        <!-- Item 1 -->
+        <div
+          class="gallery-item"
+          data-category="us"
+          data-title="City Rain Night"
+          data-caption="The night we got soaked and still laughed."
+        >
+          <img src="p1.jpeg" alt="City Rain Night" />
+          <div class="gallery-overlay">
+            <span
+              class="text-[10px] font-label uppercase text-[#ff4ecd] tracking-widest mb-1"
+              >Just You </span
+            >
+            <h3 class="font-headline text-base text-[#e3e0f3]">
+             Beautiful, Always
+            </h3>
+            <p class="text-[#e3e0f3]/60 text-xs mt-1 italic">
+            Beautiful is an understatement
+when it comes to you.
+            </p>
+          </div>
+          <div class="neon-border"></div>
+          <!-- Heart button -->
+          <button
+            class="absolute top-3 right-3 opacity-0 group-hover:opacity-100 w-9 h-9 rounded-full bg-[#12121f]/70 flex items-center justify-center heart-btn transition-all"
+            onclick="toggleHeart(this)"
+          >
+            <span
+              class="material-symbols-outlined text-[18px] text-[#e3e0f3]/60"
+              >favorite</span
+            >
+          </button>
+        </div>
+
+        <!-- Item 2 -->
+        <div
+          class="gallery-item"
+          data-category="you"
+          data-title="Those Eyes"
+          data-caption="Lost in them, never found my way back."
+        >
+          <img src="p2.jpeg" alt="Those Eyes" />
+          <div class="gallery-overlay">
+            <span
+              class="text-[10px] font-label uppercase text-[#ff4ecd] tracking-widest mb-1"
+              >Just You</span
+            >
+            <h3 class="font-headline text-base text-[#e3e0f3]">Cute Look</h3>
+            <p class="text-[#e3e0f3]/60 text-xs mt-1 italic">
+            You make cute look magical
+and beauty look effortless.
+            </p>
+          </div>
+          <div class="neon-border"></div>
+          <button
+            class="absolute top-3 right-3 opacity-0 group-hover:opacity-100 w-9 h-9 rounded-full bg-[#12121f]/70 flex items-center justify-center heart-btn transition-all"
+            onclick="toggleHeart(this)"
+          >
+            <span
+              class="material-symbols-outlined text-[18px] text-[#e3e0f3]/60"
+              >favorite</span
+            >
+          </button>
+        </div>
+
+        <!-- Item 3 -->
+        <div
+          class="gallery-item"
+          data-category="vibes"
+          data-title="Neon Dance"
+          data-caption="Moving to a beat only we could hear."
+        >
+          <img src="p3.jpeg" alt="Neon Dance" />
+          <div class="gallery-overlay">
+            <span
+              class="text-[10px] font-label uppercase text-[#ff4ecd] tracking-widest mb-1"
+              >Vibes</span
+            >
+            <h3 class="font-headline text-base text-[#e3e0f3]">My Favorite Person, Always</h3>
+            <p class="text-[#e3e0f3]/60 text-xs mt-1 italic">
+             You’re effortlessly beautiful…
+and always my favorite person.
+            </p>
+          </div>
+          <div class="neon-border"></div>
+          <button
+            class="absolute top-3 right-3 opacity-0 group-hover:opacity-100 w-9 h-9 rounded-full bg-[#12121f]/70 flex items-center justify-center heart-btn transition-all"
+            onclick="toggleHeart(this)"
+          >
+            <span
+              class="material-symbols-outlined text-[18px] text-[#e3e0f3]/60"
+              >favorite</span
+            >
+          </button>
+        </div>
+
+        <!-- Item 4 -->
+        <div
+          class="gallery-item"
+          data-category="us"
+          data-title="Forever With You"
+          data-caption="No matter where life takes us."
+        >
+          <img src="p4.jpeg" alt="Forever With You" />
+          <div class="gallery-overlay">
+            <span
+              class="text-[10px] font-label uppercase text-[#ff4ecd] tracking-widest mb-1"
+              >Us Together</span
+            >
+            <h3 class="font-headline text-base text-[#e3e0f3]">
+              Forever With You
+            </h3>
+            <p class="text-[#e3e0f3]/60 text-xs mt-1 italic">
+          The rose is pretty…
+but you’re the reason it looks special.
+            </p>
+          </div>
+          <div class="neon-border"></div>
+          <button
+            class="absolute top-3 right-3 opacity-0 group-hover:opacity-100 w-9 h-9 rounded-full bg-[#12121f]/70 flex items-center justify-center heart-btn transition-all"
+            onclick="toggleHeart(this)"
+          >
+            <span
+              class="material-symbols-outlined text-[18px] text-[#e3e0f3]/60"
+              >favorite</span
+            >
+          </button>
+        </div>
+
+        <!-- Item 5 -->
+        <div
+          class="gallery-item"
+          data-category="you"
+          data-title="That Smile"
+          data-caption="Your smile is my kind of magic."
+        >
+          <img src="p5.jpeg" alt="That Smile" />
+          <div class="gallery-overlay">
+            <span
+              class="text-[10px] font-label uppercase text-[#ff4ecd] tracking-widest mb-1"
+              >Just You</span
+            >
+            <h3 class="font-headline text-base text-[#e3e0f3]">
+              That Smile 😊
+            </h3>
+            <p class="text-[#e3e0f3]/60 text-xs mt-1 italic">
+              Your smile is my kind of magic.
+            </p>
+          </div>
+          <div class="neon-border"></div>
+          <button
+            class="absolute top-3 right-3 opacity-0 group-hover:opacity-100 w-9 h-9 rounded-full bg-[#12121f]/70 flex items-center justify-center heart-btn transition-all"
+            onclick="toggleHeart(this)"
+          >
+            <span
+              class="material-symbols-outlined text-[18px] text-[#e3e0f3]/60"
+              >favorite</span
+            >
+          </button>
+        </div>
+
+        <!-- Item 6 -->
+        <div
+          class="gallery-item"
+          data-category="places"
+          data-title="Our Corner"
+          data-caption="No matter what, it's always you."
+        >
+          <img src="c1.jpeg" alt="Our Corner" />
+          <div class="gallery-overlay">
+            <span
+              class="text-[10px] font-label uppercase text-[#ff4ecd] tracking-widest mb-1"
+              >Vibes</span
+            >
+            <h3 class="font-headline text-base text-[#e3e0f3]">So Cute, So Beautiful…</h3>
+            <p class="text-[#e3e0f3]/60 text-xs mt-1 italic">
+             Every time I look at you,
+I fall in love more.
+            </p>
+          </div>
+          <div class="neon-border"></div>
+          <button
+            class="absolute top-3 right-3 opacity-0 group-hover:opacity-100 w-9 h-9 rounded-full bg-[#12121f]/70 flex items-center justify-center heart-btn transition-all"
+            onclick="toggleHeart(this)"
+          >
+            <span
+              class="material-symbols-outlined text-[18px] text-[#e3e0f3]/60"
+              >favorite</span
+            >
+          </button>
+        </div>
+
+        <!-- Item 7 -->
+        <div
+          class="gallery-item"
+          data-category="vibes"
+          data-title="Rainy Glass"
+          data-caption="I see my whole world in your eyes."
+        >
+          <img src="c2.jpeg" alt="Rainy Glass" />
+          <div class="gallery-overlay">
+            <span
+              class="text-[10px] font-label uppercase text-[#ff4ecd] tracking-widest mb-1"
+              >Vibes</span
+            >
+            <h3 class="font-headline text-base text-[#e3e0f3]">Still Falling For You</h3>
+            <p class="text-[#e3e0f3]/60 text-xs mt-1 italic">
+             That quiet smile of yours…
+it speaks directly to my heart.
+            </p>
+          </div>
+          <div class="neon-border"></div>
+          <button
+            class="absolute top-3 right-3 opacity-0 group-hover:opacity-100 w-9 h-9 rounded-full bg-[#12121f]/70 flex items-center justify-center heart-btn transition-all"
+            onclick="toggleHeart(this)"
+          >
+            <span
+              class="material-symbols-outlined text-[18px] text-[#e3e0f3]/60"
+              >favorite</span
+            >
+          </button>
+        </div>
+
+        <!-- Item 8 -->
+        <div
+          class="gallery-item"
+          data-category="places"
+          data-title="Late Night Walk"
+          data-caption="Talking till the world disappears."
+        >
+          <img src="c3.jpeg" alt="Late Night Walk" />
+          <div class="gallery-overlay">
+            <span
+              class="text-[10px] font-label uppercase text-[#ff4ecd] tracking-widest mb-1"
+              >Vibes</span
+            >
+            <h3 class="font-headline text-base text-[#e3e0f3]">
+         Too Cute To Be Real 💕
+            </h3>
+            <p class="text-[#e3e0f3]/60 text-xs mt-1 italic">
+             You’re the kind of beautiful
+that makes everything else fade.
+            </p>
+          </div>
+          <div class="neon-border"></div>
+          <button
+            class="absolute top-3 right-3 opacity-0 group-hover:opacity-100 w-9 h-9 rounded-full bg-[#12121f]/70 flex items-center justify-center heart-btn transition-all"
+            onclick="toggleHeart(this)"
+          >
+            <span
+              class="material-symbols-outlined text-[18px] text-[#e3e0f3]/60"
+              >favorite</span
+            >
+          </button>
+        </div>
+      </div>
+
+      <!-- Empty State (shown when filter has no results) -->
+      <div id="empty-state" class="hidden text-center py-24">
+        <span
+          class="material-symbols-outlined text-[60px] text-[#ff4ecd]/30 mb-4 block"
+          >photo_library</span
+        >
+        <p class="font-headline italic text-[#e3e0f3]/40 text-xl">
+          No moments found yet… 💫
+        </p>
+      </div>
+    </main>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+      <button
+        onclick="closeLightbox()"
+        class="absolute top-6 right-8 w-12 h-12 rounded-full glass-panel flex items-center justify-center hover:bg-[#ff4ecd]/20 transition-colors"
+      >
+        <span class="material-symbols-outlined text-[#e3e0f3]">close</span>
+      </button>
+
+      <!-- Nav arrows -->
+      <button
+        id="lb-prev"
+        class="absolute left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full glass-panel flex items-center justify-center hover:bg-[#ff4ecd]/20 transition-colors"
+      >
+        <span class="material-symbols-outlined text-[#e3e0f3]"
+          >chevron_left</span
+        >
+      </button>
+      <button
+        id="lb-next"
+        class="absolute right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full glass-panel flex items-center justify-center hover:bg-[#ff4ecd]/20 transition-colors"
+      >
+        <span class="material-symbols-outlined text-[#e3e0f3]"
+          >chevron_right</span
+        >
+      </button>
+
+      <img id="lightbox-img" src="" alt="" class="mb-6" />
+
+      <div class="text-center px-6">
+        <span
+          id="lb-category"
+          class="text-[10px] font-label uppercase text-[#ff4ecd] tracking-widest mb-2 block"
+        ></span>
+        <h2
+          id="lb-title"
+          class="font-headline text-2xl text-[#e3e0f3] mb-2"
+        ></h2>
+        <p
+          id="lb-caption"
+          class="font-headline italic text-[#e3e0f3]/60 text-base"
+        ></p>
+      </div>
+
+      <!-- Counter dots -->
+      <div id="lb-dots" class="flex gap-2 mt-6"></div>
+    </div>
+
+    <!-- Upload Modal -->
+    <div class="lightbox" id="upload-modal">
+      <div class="glass-panel rounded-2xl p-10 w-full max-w-md mx-6 relative">
+        <button
+          onclick="
+            document.getElementById('upload-modal').classList.remove('open')
+          "
+          class="absolute top-4 right-4 w-10 h-10 rounded-full flex items-center justify-center hover:bg-[#ff4ecd]/20 transition-colors"
+        >
+          <span class="material-symbols-outlined text-[#e3e0f3]">close</span>
+        </button>
+        <h2 class="font-headline text-2xl font-bold italic mb-2 text-[#e3e0f3]">
+          Upload a Moment 💖
+        </h2>
+        <p class="text-[#e3e0f3]/50 text-sm mb-8 font-headline italic">
+          Save this memory forever.
+        </p>
+
+        <div
+          id="drop-zone"
+          class="border-2 border-dashed border-[#ff4ecd]/30 rounded-xl p-10 text-center mb-6 hover:border-[#ff4ecd]/60 transition-colors cursor-pointer"
+        >
+          <span
+            class="material-symbols-outlined text-[48px] text-[#ff4ecd]/40 mb-3 block"
+            >add_photo_alternate</span
+          >
+          <p class="text-[#e3e0f3]/40 text-sm font-label">
+            Drop your photo here <br />
+            <span class="text-[#ff4ecd]/60">or click to browse</span>
+          </p>
+          <input
+            type="file"
+            id="file-input"
+            class="hidden"
+            accept="image/*"
+            multiple
+          />
+        </div>
+
+        <div class="mb-4">
+          <input
+            type="text"
+            id="moment-title"
+            placeholder="Give this moment a name…"
+            class="w-full bg-[#12121f] border border-[#ff4ecd]/20 rounded-full px-5 py-3 text-sm text-[#e3e0f3] placeholder-[#e3e0f3]/30 focus:outline-none focus:border-[#ff4ecd]/60 transition-all mb-3"
+          />
+          <select
+            id="moment-category"
+            class="w-full bg-[#12121f] border border-[#ff4ecd]/20 rounded-full px-5 py-3 text-sm text-[#e3e0f3]/60 focus:outline-none focus:border-[#ff4ecd]/60 transition-all"
+          >
+            <option value="" disabled selected>Choose a category…</option>
+            <option value="us">Us Together</option>
+            <option value="you">Just You</option>
+            <option value="places">Places</option>
+            <option value="vibes">Vibes</option>
+          </select>
+        </div>
+
+        <button
+          onclick="handleUpload()"
+          class="w-full py-4 rounded-full bg-gradient-to-r from-[#ff4ecd] to-[#7a5cff] text-[#12121f] font-bold text-sm uppercase tracking-widest hover:opacity-90 transition-opacity"
+        >
+          Save This Moment ✨
+        </button>
+      </div>
+    </div>
+
+    <!-- Ripple Cursor -->
+    <div class="cursor-ripple"></div>
+
+    <script>
+// Load navbar
+fetch('navbar.html')
+  .then(response => response.text())
+  .then(data => {
+    document.getElementById('navbar').innerHTML = data;
+  });
+      
+      // ----------- GALLERY ITEMS ARRAY (mirrors DOM + dynamic uploads) -----------
+      let galleryItems = Array.from(document.querySelectorAll(".gallery-item"));
+      let currentLightboxIndex = 0;
+      let visibleItems = [];
+
+      // ----------- HOVER: show heart button -----------
+      galleryItems.forEach((item) => {
+        item.addEventListener("mouseenter", () => {
+          const btn = item.querySelector(".heart-btn");
+          if (btn) btn.style.opacity = "1";
+        });
+        item.addEventListener("mouseleave", () => {
+          const btn = item.querySelector(".heart-btn");
+          if (btn && !btn.classList.contains("liked")) btn.style.opacity = "0";
+        });
+        item.addEventListener("click", (e) => {
+          if (e.target.closest(".heart-btn")) return;
+          openLightbox(item);
+        });
+      });
+
+      function toggleHeart(btn) {
+        btn.classList.toggle("liked");
+        const icon = btn.querySelector(".material-symbols-outlined");
+        if (btn.classList.contains("liked")) {
+          icon.style.color = "#ff4ecd";
+          icon.style.fontVariationSettings =
+            '"FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24';
+          btn.style.opacity = "1";
+        } else {
+          icon.style.color = "rgba(227,224,243,0.6)";
+          icon.style.fontVariationSettings =
+            '"FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24';
+        }
+      }
+
+      // ----------- FILTER -----------
+      document.querySelectorAll(".filter-pill").forEach((pill) => {
+        pill.addEventListener("click", () => {
+          document.querySelectorAll(".filter-pill").forEach((p) => {
+            p.classList.remove("active");
+            p.classList.add("text-[#e3e0f3]/60");
+          });
+          pill.classList.add("active");
+          pill.classList.remove("text-[#e3e0f3]/60");
+
+          const filter = pill.getAttribute("data-filter");
+          applyFilter(filter);
+        });
+      });
+
+      function applyFilter(filter) {
+        galleryItems = Array.from(document.querySelectorAll(".gallery-item"));
+        let count = 0;
+        galleryItems.forEach((item) => {
+          const cat = item.getAttribute("data-category");
+          if (filter === "all" || cat === filter) {
+            item.classList.remove("hidden");
+            count++;
+          } else {
+            item.classList.add("hidden");
+          }
+        });
+        document.getElementById("photo-count").textContent =
+          count + " Moment" + (count !== 1 ? "s" : "");
+        document
+          .getElementById("empty-state")
+          .classList.toggle("hidden", count > 0);
+      }
+
+      // ----------- SEARCH -----------
+      document
+        .getElementById("search-input")
+        .addEventListener("input", function () {
+          const query = this.value.toLowerCase().trim();
+          galleryItems = Array.from(document.querySelectorAll(".gallery-item"));
+          let count = 0;
+          galleryItems.forEach((item) => {
+            const title = (item.getAttribute("data-title") || "").toLowerCase();
+            const caption = (
+              item.getAttribute("data-caption") || ""
+            ).toLowerCase();
+            if (!query || title.includes(query) || caption.includes(query)) {
+              item.classList.remove("hidden");
+              count++;
+            } else {
+              item.classList.add("hidden");
+            }
+          });
+          document.getElementById("photo-count").textContent =
+            count + " Moment" + (count !== 1 ? "s" : "");
+          document
+            .getElementById("empty-state")
+            .classList.toggle("hidden", count > 0);
+        });
+
+      // ----------- VIEW TOGGLE -----------
+      function setView(mode) {
+        const grid = document.getElementById("gallery-masonry");
+        if (mode === "masonry") {
+          grid.className = "masonry-grid";
+          document
+            .getElementById("view-masonry")
+            .classList.add("bg-[#ff4ecd]/10", "text-[#ff4ecd]");
+          document
+            .getElementById("view-masonry")
+            .classList.remove("text-[#e3e0f3]/40");
+          document
+            .getElementById("view-grid")
+            .classList.remove("bg-[#ff4ecd]/10", "text-[#ff4ecd]");
+          document
+            .getElementById("view-grid")
+            .classList.add("text-[#e3e0f3]/40");
+        } else {
+          grid.className =
+            "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4";
+          document
+            .getElementById("view-grid")
+            .classList.add("bg-[#ff4ecd]/10", "text-[#ff4ecd]");
+          document
+            .getElementById("view-grid")
+            .classList.remove("text-[#e3e0f3]/40");
+          document
+            .getElementById("view-masonry")
+            .classList.remove("bg-[#ff4ecd]/10", "text-[#ff4ecd]");
+          document
+            .getElementById("view-masonry")
+            .classList.add("text-[#e3e0f3]/40");
+        }
+      }
+
+      // ----------- LIGHTBOX -----------
+      function getVisibleItems() {
+        return Array.from(
+          document.querySelectorAll(".gallery-item:not(.hidden)"),
+        );
+      }
+
+      function openLightbox(item) {
+        visibleItems = getVisibleItems();
+        currentLightboxIndex = visibleItems.indexOf(item);
+        renderLightbox();
+        document.getElementById("lightbox").classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeLightbox() {
+        document.getElementById("lightbox").classList.remove("open");
+        document.body.style.overflow = "";
+      }
+
+      function renderLightbox() {
+        const item = visibleItems[currentLightboxIndex];
+        if (!item) return;
+        const img = item.querySelector("img");
+        document.getElementById("lightbox-img").src = img.src;
+        document.getElementById("lightbox-img").alt = img.alt;
+        document.getElementById("lb-title").textContent =
+          item.getAttribute("data-title") || "";
+        document.getElementById("lb-caption").textContent =
+          item.getAttribute("data-caption") || "";
+        const catMap = {
+          us: "Us Together",
+          you: "Just You",
+          places: "Places",
+          vibes: "Vibes",
+        };
+        document.getElementById("lb-category").textContent =
+          catMap[item.getAttribute("data-category")] || "";
+
+        // Dots
+        const dotsContainer = document.getElementById("lb-dots");
+        dotsContainer.innerHTML = "";
+        visibleItems.forEach((_, i) => {
+          const dot = document.createElement("div");
+          dot.className =
+            i === currentLightboxIndex
+              ? "w-5 h-2 rounded-full bg-[#ff4ecd] shadow-[0_0_8px_#ff4ecd] transition-all duration-300"
+              : "w-2 h-2 rounded-full bg-[#e3e0f3]/20 transition-all duration-300 cursor-pointer";
+          dot.onclick = () => {
+            currentLightboxIndex = i;
+            renderLightbox();
+          };
+          dotsContainer.appendChild(dot);
+        });
+      }
+
+      document.getElementById("lb-prev").addEventListener("click", () => {
+        currentLightboxIndex =
+          (currentLightboxIndex - 1 + visibleItems.length) %
+          visibleItems.length;
+        renderLightbox();
+      });
+      document.getElementById("lb-next").addEventListener("click", () => {
+        currentLightboxIndex = (currentLightboxIndex + 1) % visibleItems.length;
+        renderLightbox();
+      });
+
+      // Keyboard nav
+      document.addEventListener("keydown", (e) => {
+        if (!document.getElementById("lightbox").classList.contains("open"))
+          return;
+        if (e.key === "Escape") closeLightbox();
+        if (e.key === "ArrowLeft") {
+          currentLightboxIndex =
+            (currentLightboxIndex - 1 + visibleItems.length) %
+            visibleItems.length;
+          renderLightbox();
+        }
+        if (e.key === "ArrowRight") {
+          currentLightboxIndex =
+            (currentLightboxIndex + 1) % visibleItems.length;
+          renderLightbox();
+        }
+      });
+
+      // Click outside to close
+      document
+        .getElementById("lightbox")
+        .addEventListener("click", function (e) {
+          if (e.target === this) closeLightbox();
+        });
+      document
+        .getElementById("upload-modal")
+        .addEventListener("click", function (e) {
+          if (e.target === this) this.classList.remove("open");
+        });
+
+      // ----------- UPLOAD -----------
+      document.getElementById("drop-zone").addEventListener("click", () => {
+        document.getElementById("file-input").click();
+      });
+
+      document.getElementById("drop-zone").addEventListener("dragover", (e) => {
+        e.preventDefault();
+        document.getElementById("drop-zone").style.borderColor =
+          "rgba(255,78,205,0.7)";
+      });
+      document.getElementById("drop-zone").addEventListener("dragleave", () => {
+        document.getElementById("drop-zone").style.borderColor =
+          "rgba(255,78,205,0.3)";
+      });
+      document.getElementById("drop-zone").addEventListener("drop", (e) => {
+        e.preventDefault();
+        document.getElementById("drop-zone").style.borderColor =
+          "rgba(255,78,205,0.3)";
+        if (e.dataTransfer.files.length) {
+          document.getElementById("file-input").files = e.dataTransfer.files;
+          showPreview(e.dataTransfer.files[0]);
+        }
+      });
+      document
+        .getElementById("file-input")
+        .addEventListener("change", function () {
+          if (this.files.length) showPreview(this.files[0]);
+        });
+
+      function showPreview(file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const dz = document.getElementById("drop-zone");
+          dz.innerHTML = `<img src="${e.target.result}" alt="preview" style="width:100%;height:160px;object-fit:cover;border-radius:0.75rem;" />`;
+          dz._previewSrc = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+
+      function handleUpload() {
+        const title =
+          document.getElementById("moment-title").value.trim() || "New Moment";
+        const category =
+          document.getElementById("moment-category").value || "vibes";
+        const dz = document.getElementById("drop-zone");
+        const imgSrc = dz._previewSrc;
+
+        if (!imgSrc) {
+          alert("Please select a photo first! 💖");
+          return;
+        }
+
+        // Add to gallery
+        const masonry = document.getElementById("gallery-masonry");
+        const newItem = document.createElement("div");
+        newItem.className = "gallery-item";
+        newItem.setAttribute("data-category", category);
+        newItem.setAttribute("data-title", title);
+        newItem.setAttribute("data-caption", "A new beautiful memory.");
+        newItem.style.animationDelay = "0s";
+
+        const catLabels = {
+          us: "Us Together",
+          you: "Just You",
+          places: "Places",
+          vibes: "Vibes",
+        };
+
+        newItem.innerHTML = `
+          <img src="${imgSrc}" alt="${title}" />
+          <div class="gallery-overlay">
+            <span class="text-[10px] font-label uppercase text-[#ff4ecd] tracking-widest mb-1">${catLabels[category]}</span>
+            <h3 class="font-headline text-base text-[#e3e0f3]">${title}</h3>
+            <p class="text-[#e3e0f3]/60 text-xs mt-1 italic">A new beautiful memory.</p>
+          </div>
+          <div class="neon-border"></div>
+          <button class="absolute top-3 right-3 w-9 h-9 rounded-full bg-[#12121f]/70 flex items-center justify-center heart-btn transition-all" style="opacity:0" onclick="toggleHeart(this)">
+            <span class="material-symbols-outlined text-[18px] text-[#e3e0f3]/60">favorite</span>
+          </button>
+        `;
+
+        // Add click and hover
+        newItem.addEventListener("click", (e) => {
+          if (e.target.closest(".heart-btn")) return;
+          galleryItems = Array.from(document.querySelectorAll(".gallery-item"));
+          openLightbox(newItem);
+        });
+        newItem.addEventListener("mouseenter", () => {
+          const btn = newItem.querySelector(".heart-btn");
+          if (btn) btn.style.opacity = "1";
+        });
+        newItem.addEventListener("mouseleave", () => {
+          const btn = newItem.querySelector(".heart-btn");
+          if (btn && !btn.classList.contains("liked")) btn.style.opacity = "0";
+        });
+
+        masonry.insertBefore(newItem, masonry.firstChild);
+        galleryItems = Array.from(document.querySelectorAll(".gallery-item"));
+
+        // Update count
+        const visible = galleryItems.filter(
+          (i) => !i.classList.contains("hidden"),
+        ).length;
+        document.getElementById("photo-count").textContent =
+          visible + " Moments";
+
+        // Close modal & reset
+        document.getElementById("upload-modal").classList.remove("open");
+        document.getElementById("moment-title").value = "";
+        document.getElementById("moment-category").value = "";
+        document.getElementById("drop-zone").innerHTML = `
+          <span class="material-symbols-outlined text-[48px] text-[#ff4ecd]/40 mb-3 block">add_photo_alternate</span>
+          <p class="text-[#e3e0f3]/40 text-sm font-label">Drop your photo here <br/> <span class="text-[#ff4ecd]/60">or click to browse</span></p>
+          <input type="file" id="file-input" class="hidden" accept="image/*" multiple />
+        `;
+        document
+          .getElementById("drop-zone")
+          .addEventListener("click", () =>
+            document.getElementById("file-input").click(),
+          );
+        document
+          .getElementById("file-input")
+          .addEventListener("change", function () {
+            if (this.files.length) showPreview(this.files[0]);
+          });
+      }
+
+      // ----------- RIPPLE CURSOR -----------
+      const cursor = document.querySelector(".cursor-ripple");
+      document.addEventListener("mousemove", (e) => {
+        cursor.style.top = e.clientY + "px";
+        cursor.style.left = e.clientX + "px";
+      });
+      document.addEventListener("click", () => {
+        cursor.classList.add("ripple-click");
+        setTimeout(() => cursor.classList.remove("ripple-click"), 600);
+      });
+
+     
+// Simple Login Protection
+function checkAuth() {
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+  const loginTime = localStorage.getItem("loginTime");
+
+  // Auto logout after 7 days (optional)
+  if (loginTime && Date.now() - loginTime > 7 * 24 * 60 * 60 * 1000) {
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("loginTime");
+  }
+
+  if (!isLoggedIn) {
+    window.location.href = "login.html";
+  }
+}
+
+// Run protection on page load
+document.addEventListener("DOMContentLoaded", checkAuth);
+
+    </script>
+  </body>
+</html>

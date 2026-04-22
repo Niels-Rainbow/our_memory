@@ -1,0 +1,1148 @@
+<!doctype html>
+
+<html class="dark" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&amp;family=Manrope:wght@300;400;500;600;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-dim": "#12121f",
+              "surface-container-lowest": "#0d0d19",
+              "surface-bright": "#383846",
+              "on-secondary": "#30009b",
+              "inverse-surface": "#e3e0f3",
+              "tertiary-container": "#63a900",
+              "on-secondary-fixed-variant": "#4617cb",
+              "on-primary-container": "#5f004a",
+              "primary-fixed-dim": "#ffaede",
+              "secondary-fixed-dim": "#c9beff",
+              "surface-variant": "#343341",
+              "tertiary-fixed-dim": "#90da3f",
+              "primary-container": "#ff4ecd",
+              "on-primary-fixed-variant": "#87006a",
+              "surface-tint": "#ffaede",
+              primary: "#ffaede",
+              "tertiary-fixed": "#abf859",
+              "inverse-primary": "#b1008c",
+              "inverse-on-surface": "#2f2f3d",
+              tertiary: "#90da3f",
+              "secondary-container": "#491ccd",
+              "surface-container-low": "#1a1a27",
+              "surface-container-high": "#292936",
+              secondary: "#c9beff",
+              surface: "#12121f",
+              "on-surface": "#e3e0f3",
+              "outline-variant": "#56404d",
+              "on-tertiary-container": "#1c3600",
+              error: "#ffb4ab",
+              "on-primary": "#60004b",
+              "primary-fixed": "#ffd8ec",
+              "on-tertiary": "#1d3700",
+              "error-container": "#93000a",
+              "secondary-fixed": "#e6deff",
+              "surface-container-highest": "#343341",
+              "surface-container": "#1f1e2b",
+              "on-primary-fixed": "#3b002d",
+              "on-surface-variant": "#dcbecd",
+              "on-secondary-fixed": "#1b0062",
+              outline: "#a48997",
+              "on-error": "#690005",
+              "on-tertiary-fixed": "#0e2000",
+              "on-error-container": "#ffdad6",
+              "on-secondary-container": "#bbaeff",
+              "on-tertiary-fixed-variant": "#2c5000",
+              "on-background": "#e3e0f3",
+              background: "#12121f",
+            },
+            borderRadius: {
+              DEFAULT: "1rem",
+              lg: "2rem",
+              xl: "3rem",
+              full: "9999px",
+            },
+            fontFamily: {
+              headline: ["Noto Serif"],
+              body: ["Manrope"],
+              label: ["Manrope"],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      .liquid-motion {
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .hero-slide {
+        transition: all 1.2s ease-in-out;
+      }
+      .active-slide-zoom {
+        transform: scale(1.08);
+      }
+      .progress-bar-fill {
+        transition: width 4s linear;
+      }
+      .neon-glow-primary {
+        box-shadow: 0 0 20px rgba(255, 78, 205, 0.2);
+      }
+      .glass-panel {
+        backdrop-filter: blur(20px);
+        background: rgba(18, 18, 31, 0.8);
+        border: 1px solid rgba(255, 78, 205, 0.1);
+      }
+
+      /* 🌊 LIQUID MOTION */
+      /* New add*/
+      .carousel .item {
+        background: transparent;
+        padding: 0;
+        overflow: hidden;
+      }
+      .carousel .item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      /* Ripple Effect */
+      .cursor-ripple {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+
+        background: radial-gradient(circle, #ff4ecd, #7a5cff);
+        box-shadow:
+          0 0 10px #ff4ecd,
+          0 0 20px #7a5cff,
+          0 0 40px #ff4ecd;
+
+        transform: translate(-50%, -50%);
+        transition: transform 0.08s ease-out;
+      }
+
+      .ripple-click {
+        animation: rippleEffect 0.6s ease-out;
+      }
+
+      @keyframes rippleEffect {
+        0% {
+          transform: translate(-50%, -50%) scale(1);
+          opacity: 1;
+        }
+        100% {
+          transform: translate(-50%, -50%) scale(4);
+          opacity: 0;
+        }
+      }
+
+      /* Cinematic Zoom + Parallax Effect */
+      .hero-slide img {
+        transition: transform 6s ease-in-out;
+      }
+
+      .hero-slide.active-slide-zoom img {
+        transform: scale(1.1);
+      }
+
+      /* index gallery masonry */
+      .masonry-grid {
+        columns: 3;
+        column-gap: 1.25rem;
+      }
+      @media (max-width: 1024px) {
+        .masonry-grid {
+          columns: 2;
+        }
+      }
+      @media (max-width: 640px) {
+        .masonry-grid {
+          columns: 1;
+        }
+      }
+
+      .gallery-item {
+        break-inside: avoid;
+        margin-bottom: 1.25rem;
+        position: relative;
+        overflow: hidden;
+        border-radius: 1rem;
+        cursor: pointer;
+      }
+      .gallery-item img {
+        width: 100%;
+        display: block;
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .gallery-item:hover img {
+        transform: scale(1.08);
+      }
+
+      .gallery-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to top,
+          rgba(18, 18, 31, 0.92) 0%,
+          rgba(122, 92, 255, 0.15) 60%,
+          transparent 100%
+        );
+        opacity: 0;
+        transition: opacity 0.4s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 1.5rem;
+      }
+      .gallery-item:hover .gallery-overlay {
+        opacity: 1;
+      }
+      .gallery-item:hover .heart-btn {
+        opacity: 1 !important;
+      }
+
+      .neon-border {
+        position: absolute;
+        inset: 0;
+        border-radius: 1rem;
+        border: 1px solid rgba(255, 78, 205, 0);
+        transition:
+          border-color 0.4s ease,
+          box-shadow 0.4s ease;
+        pointer-events: none;
+      }
+      .gallery-item:hover .neon-border {
+        border-color: rgba(255, 78, 205, 0.5);
+        box-shadow:
+          inset 0 0 20px rgba(255, 78, 205, 0.07),
+          0 0 30px rgba(255, 78, 205, 0.15);
+      }
+      /* End Gallery */
+
+      /* End Text */
+      @keyframes wave {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-background text-on-surface font-body overflow-x-hidden">
+    <!-- Top Navigation Bar (Shared Component Strategy) -->
+    <div id="navbar"></div>
+    <!-- Side Navigation Bar (Shared Component Strategy) -->
+    <aside
+      class="hidden md:flex fixed left-0 top-0 h-full w-20 hover:w-64 transition-all duration-500 z-40 bg-[#12121f]/90 backdrop-blur-2xl flex-col py-8 shadow-[10px_0_30px_rgba(122,92,255,0.04)] group"
+    >
+      <div class="flex flex-col items-center gap-12 mt-16 w-full">
+        <div
+          class="flex flex-col items-center gap-1 w-full px-4 group-hover:items-start group-hover:px-8"
+        >
+          <div
+            class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center mb-2"
+          >
+            <span
+              class="material-symbols-outlined text-on-secondary-container"
+              data-icon="auto_awesome"
+              >auto_awesome</span
+            >
+          </div>
+          <p
+            class="hidden group-hover:block font-label uppercase tracking-widest text-[10px] text-[#ff4ecd]"
+          ></p>
+          <p
+            class="hidden group-hover:block font-label uppercase tracking-widest text-[8px] text-[#e3e0f3]/40"
+          >
+            Our Moments
+          </p>
+        </div>
+        <div class="flex flex-col w-full gap-4">
+          <div
+            class="flex items-center gap-4 w-full px-6 py-3 text-[#ff4ecd] bg-[#ff4ecd]/5 border-r-4 border-[#ff4ecd]"
+          >
+            <span class="material-symbols-outlined" data-icon="auto_awesome"
+              >auto_awesome</span
+            >
+            <span
+              class="hidden group-hover:block font-label uppercase tracking-widest text-[10px]"
+              >Home</span
+            >
+          </div>
+          <div
+            class="flex items-center gap-4 w-full px-6 py-3 text-[#e3e0f3]/40 hover:text-[#ff4ecd] hover:bg-[#7a5cff]/10 transition-all duration-300"
+          >
+            <span class="material-symbols-outlined" data-icon="photo_library"
+              >photo_library</span
+            >
+            <span
+              class="hidden group-hover:block font-label uppercase tracking-widest text-[10px]"
+              >Gallery
+            </span>
+          </div>
+          <div
+            class="flex items-center gap-4 w-full px-6 py-3 text-[#e3e0f3]/40 hover:text-[#ff4ecd] hover:bg-[#7a5cff]/10 transition-all duration-300"
+          >
+            <span class="material-symbols-outlined" data-icon="palette"
+              >palette</span
+            >
+            <span
+              class="hidden group-hover:block font-label uppercase tracking-widest text-[10px]"
+              >Library</span
+            >
+          </div>
+          <div
+            class="flex items-center gap-4 w-full px-6 py-3 text-[#e3e0f3]/40 hover:text-[#ff4ecd] hover:bg-[#7a5cff]/10 transition-all duration-300"
+          >
+            <span class="material-symbols-outlined" data-icon="settings"
+              >settings</span
+            >
+            <span
+              class="hidden group-hover:block font-label uppercase tracking-widest text-[10px]"
+              >Settings</span
+            >
+       </div>
+          <div
+            class="flex items-center gap-4 w-full px-6 py-3 text-[#ff4ecd] bg-[#ff4ecd]/5 border-r-4 border-[#ff4ecd]"
+          >
+            <span class="material-symbols-outlined">celebration</span>
+            <span
+              class="hidden group-hover:block font-label uppercase tracking-widest text-[10px]"
+              >Anniversary</span
+            >
+          </div>
+        </div>
+      </div>
+      <div class="mt-auto px-4 w-full">
+        <button
+          class="w-full py-4 rounded-full bg-gradient-to-r from-[#ff4ecd] to-[#7a5cff] text-[#12121f] font-bold text-[10px] uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        >
+          Upload Moment
+        </button>
+      </div>
+    </aside>
+    <!-- Main Hero Slider -->
+
+    <section class="relative h-screen w-full overflow-hidden" id="hero-slider">
+      <!-- Top Progress Bar Container -->
+      <div
+        class="fixed top-0 left-0 w-full h-1 z-[60] bg-surface-container-lowest"
+      >
+        <div
+          class="h-full w-0 bg-primary-container shadow-[0_0_10px_#ff4ecd] progress-bar-fill"
+          id="progress-bar"
+        ></div>
+      </div>
+      <!-- Slides Container -->
+      <div class="relative w-full h-full" id="slider-main">
+        <!-- Slide 1 -->
+        <div
+          class="hero-slide absolute inset-0 opacity-100 z-10 scale-100 overflow-hidden active-slide-zoom"
+          data-slide="1"
+        >
+          <div
+            class="absolute inset-0 bg-gradient-to-r from-[#12121f] via-[#12121f]/60 to-transparent z-[5]"
+          ></div>
+          <div
+            class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#7a5cff]/20 z-[5]"
+          ></div>
+          <img
+            class="w-full h-full object-cover"
+            data-alt="cinematic portrait of a couple sharing a quiet moment in a neon-lit rain-slicked city street at midnight"
+            src="p1.jpeg"
+          />
+          <div
+            class="absolute inset-0 flex flex-col justify-center px-10 md:px-32 lg:px-48 z-20 pointer-events-none"
+          >
+            <span
+              class="text-primary-container font-label uppercase tracking-[0.4em] text-xs md:text-sm mb-4"
+              >Volume I</span
+            >
+            <h1
+              class="text-on-surface font-headline text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6 leading-none"
+            >
+              My Favorite <br />
+              Person 💖
+            </h1>
+            <p
+              class="text-on-surface-variant font-headline italic text-lg md:text-2xl lg:text-3xl max-w-2xl"
+            >
+              "Out of everyone in the world… I found you."
+            </p>
+          </div>
+        </div>
+        <!-- Slide 2 (Hidden Initially) -->
+        <div
+          class="hero-slide absolute inset-0 opacity-0 z-0 scale-110 overflow-hidden"
+          data-slide="2"
+        >
+          <div
+            class="absolute inset-0 bg-gradient-to-r from-[#12121f] via-[#12121f]/60 to-transparent z-[5]"
+          ></div>
+          <div
+            class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#7a5cff]/20 z-[5]"
+          ></div>
+          <img
+            class="w-full h-full object-cover"
+            data-alt="dramatic close-up of a person eyes reflecting neon pink and blue lights in a dark cinematic environment"
+            src="p2.jpeg"
+          />
+          <div
+            class="absolute inset-0 flex flex-col justify-center px-10 md:px-32 lg:px-48 z-20 pointer-events-none"
+          >
+            <span
+              class="text-primary-container font-label uppercase tracking-[0.4em] text-xs md:text-sm mb-4"
+              >Volume II</span
+            >
+            <h1
+              class="text-on-surface font-headline text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6 leading-none"
+            >
+              Those Eyes
+            </h1>
+            <p
+              class="text-on-surface-variant font-headline italic text-lg md:text-2xl lg:text-3xl max-w-2xl"
+            >
+              "I got lost, and I never wanted to be found."
+            </p>
+          </div>
+        </div>
+        <!-- Slide 3 (Hidden Initially) -->
+        <div
+          class="hero-slide absolute inset-0 opacity-0 z-0 scale-110 overflow-hidden"
+          data-slide="3"
+        >
+          <div
+            class="absolute inset-0 bg-gradient-to-r from-[#12121f] via-[#12121f]/60 to-transparent z-[5]"
+          ></div>
+          <div
+            class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#7a5cff]/20 z-[5]"
+          ></div>
+          <img
+            class="w-full h-full object-cover"
+            data-alt="blurred motion of dancers in a dark club setting with vibrant streaks of neon purple and magenta light"
+            src="p3.jpeg"
+          />
+          <div
+            class="absolute inset-0 flex flex-col justify-center px-10 md:px-32 lg:px-48 z-20 pointer-events-none"
+          >
+            <span
+              class="text-primary-container font-label uppercase tracking-[0.4em] text-xs md:text-sm mb-4"
+              >Volume III</span
+            >
+            <h1
+              class="text-on-surface font-headline text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6 leading-none"
+            >
+              My Peace 💜
+            </h1>
+            <p
+              class="text-on-surface-variant font-headline italic text-lg md:text-2xl lg:text-3xl max-w-2xl"
+            >
+              "With you, I found the peace I never knew I needed."
+            </p>
+          </div>
+        </div>
+        <!-- Slide 4 (Hidden Initially) -->
+        <div
+          class="hero-slide absolute inset-0 opacity-0 z-0 scale-110 overflow-hidden"
+          data-slide="4"
+        >
+          <div
+            class="absolute inset-0 bg-gradient-to-r from-[#12121f] via-[#12121f]/60 to-transparent z-[5]"
+          ></div>
+          <div
+            class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#7a5cff]/20 z-[5]"
+          ></div>
+          <img
+            class="w-full h-full object-cover"
+            data-alt="blurred motion of dancers in a dark club setting with vibrant streaks of neon purple and magenta light"
+            src="p4.jpeg"
+          />
+          <div
+            class="absolute inset-0 flex flex-col justify-center px-10 md:px-32 lg:px-48 z-20 pointer-events-none"
+          >
+            <span
+              class="text-primary-container font-label uppercase tracking-[0.4em] text-xs md:text-sm mb-4"
+              >Volume IV</span
+            >
+            <h1
+              class="text-on-surface font-headline text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6 leading-none"
+            >
+              Forever <br />
+              With You 💞
+            </h1>
+            <p
+              class="text-on-surface-variant font-headline italic text-lg md:text-2xl lg:text-3xl max-w-2xl"
+            >
+              "No matter where life takes us… it’s always you."
+            </p>
+          </div>
+        </div>
+        <!-- Slide 5 (Hidden Initially) -->
+        <div
+          class="hero-slide absolute inset-0 opacity-0 z-0 scale-110 overflow-hidden"
+          data-slide="5"
+        >
+          <div
+            class="absolute inset-0 bg-gradient-to-r from-[#12121f] via-[#12121f]/60 to-transparent z-[5]"
+          ></div>
+          <div
+            class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#7a5cff]/20 z-[5]"
+          ></div>
+          <img
+            class="w-full h-full object-cover"
+            data-alt="blurred motion of dancers in a dark club setting with vibrant streaks of neon purple and magenta light"
+            src="p5.jpeg"
+          />
+          <div
+            class="absolute inset-0 flex flex-col justify-center px-10 md:px-32 lg:px-48 z-20 pointer-events-none"
+          >
+            <span
+              class="text-primary-container font-label uppercase tracking-[0.4em] text-xs md:text-sm mb-4"
+              >Volume V</span
+            >
+            <h1
+              class="text-on-surface font-headline text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6 leading-none"
+            >
+              That <br />
+              smile😊
+            </h1>
+            <p
+              class="text-on-surface-variant font-headline italic text-lg md:text-2xl lg:text-3xl max-w-2xl"
+            >
+              "Your smile is my kind of magic."
+            </p>
+          </div>
+        </div>
+      </div>
+      <!-- Right Aligned Preview Cards -->
+      <div
+        class="absolute right-8 top-1/2 -translate-y-1/2 z-30 hidden lg:flex flex-col gap-6"
+      >
+        <div class="group cursor-pointer preview-card active" data-target="1">
+          <div
+            class="w-48 h-32 rounded-lg overflow-hidden glass-panel transition-all duration-500 hover:translate-x-[-10px] border-primary transition-all shadow-[0_0_20px_#ff4ecd44]"
+          >
+            <img
+              class="w-full h-full object-cover opacity-80"
+              data-alt="thumbnail of city neon scene"
+              src="p1.jpeg"
+            />
+          </div>
+          <span></span>
+        </div>
+        <div
+          class="group cursor-pointer preview-card opacity-60 hover:opacity-100 transition-opacity"
+          data-target="2"
+        >
+          <div
+            class="w-48 h-32 rounded-lg overflow-hidden glass-panel transition-all duration-500 hover:translate-x-[-10px]"
+          >
+            <img
+              class="w-full h-full object-cover opacity-60"
+              data-alt="thumbnail of eye close up"
+              src="p2.jpeg"
+            />
+          </div>
+          <span></span>
+        </div>
+
+        <div
+          class="group cursor-pointer preview-card opacity-60 hover:opacity-100 transition-opacity"
+          data-target="3"
+        >
+          <div
+            class="w-48 h-32 rounded-lg overflow-hidden glass-panel transition-all duration-500 hover:translate-x-[-10px]"
+          >
+            <img
+              class="w-full h-full object-cover opacity-60"
+              data-alt="thumbnail of neon motion"
+              src="p3.jpeg"
+            />
+          </div>
+          <span></span>
+        </div>
+
+        <div
+          class="group cursor-pointer preview-card opacity-60 hover:opacity-100 transition-opacity"
+          data-target="4"
+        >
+          <div
+            class="w-48 h-32 rounded-lg overflow-hidden glass-panel transition-all duration-500 hover:translate-x-[-10px]"
+          >
+            <img
+              class="w-full h-full object-cover opacity-60"
+              data-alt="thumbnail of neon motion"
+              src="p4.jpeg"
+            />
+          </div>
+          <span></span>
+        </div>
+
+        <div
+          class="group cursor-pointer preview-card opacity-60 hover:opacity-100 transition-opacity"
+          data-target="5"
+        >
+          <div
+            class="w-48 h-32 rounded-lg overflow-hidden glass-panel transition-all duration-500 hover:translate-x-[-10px]"
+          >
+            <img
+              class="w-full h-full object-cover opacity-60"
+              data-alt="thumbnail of neon motion"
+              src="p5.jpeg"
+            />
+          </div>
+          <span></span>
+        </div>
+      </div>
+
+      <!-- Bottom Controls for Mobile/Tablet -->
+      <div
+        class="absolute bottom-12 left-1/2 -translate-x-1/2 z-30 lg:hidden flex gap-4"
+      >
+        <button
+          class="w-3 h-3 rounded-full bg-primary shadow-[0_0_10px_#ff4ecd]"
+          data-target="1"
+        ></button>
+        <button
+          class="w-3 h-3 rounded-full bg-on-surface/20"
+          data-target="2"
+        ></button>
+        <button
+          class="w-3 h-3 rounded-full bg-on-surface/20"
+          data-target="3"
+        ></button>
+      </div>
+    </section>
+
+    <!--new gallery for-->
+
+    <section id="gallery" class="px-10 md:px-32 py-20">
+      <h2 class="text-4xl font-headline mb-4 italic text-primary">
+        Our Gallery 💖
+      </h2>
+      <p class="text-on-surface-variant mb-8 text-sm">
+        <span id="photo-count">3 Moments</span>
+      </p>
+
+      <div class="masonry-grid" id="gallery-masonry">
+        <div
+          class="gallery-item glass-panel"
+          data-title="My Favorite Person"
+          data-caption="Out of everyone in the world… I found you."
+        >
+          <img src="p1.jpeg" alt="My Favorite Person" />
+          <div class="gallery-overlay">
+            <span
+              class="text-[10px] font-label uppercase text-[#ff4ecd] tracking-widest mb-1"
+              >Us Together</span
+            >
+            <h3 class="font-headline text-base text-[#e3e0f3]">
+              My Favorite Person
+            </h3>
+            <p class="text-[#e3e0f3]/60 text-xs mt-1 italic">
+              Out of everyone in the world… I found you.
+            </p>
+          </div>
+          <div class="neon-border"></div>
+          <button
+            class="heart-btn absolute top-3 right-3 w-9 h-9 rounded-full bg-[#12121f]/70 flex items-center justify-center transition-all"
+            style="opacity: 0"
+            onclick="toggleHeart(this)"
+          >
+            <span
+              class="material-symbols-outlined text-[18px] text-[#e3e0f3]/60"
+              >favorite</span
+            >
+          </button>
+        </div>
+
+        <div
+          class="gallery-item glass-panel"
+          data-title="Those Eyes"
+          data-caption="Lost in them, never found my way back."
+        >
+          <img src="p2.jpeg" alt="Those Eyes" />
+          <div class="gallery-overlay">
+            <span
+              class="text-[10px] font-label uppercase text-[#ff4ecd] tracking-widest mb-1"
+              >Just You</span
+            >
+            <h3 class="font-headline text-base text-[#e3e0f3]">Those Eyes</h3>
+            <p class="text-[#e3e0f3]/60 text-xs mt-1 italic">
+              Lost in them, never found my way back.
+            </p>
+          </div>
+          <div class="neon-border"></div>
+          <button
+            class="heart-btn absolute top-3 right-3 w-9 h-9 rounded-full bg-[#12121f]/70 flex items-center justify-center transition-all"
+            style="opacity: 0"
+            onclick="toggleHeart(this)"
+          >
+            <span
+              class="material-symbols-outlined text-[18px] text-[#e3e0f3]/60"
+              >favorite</span
+            >
+          </button>
+        </div>
+
+        <div
+          class="gallery-item glass-panel"
+          data-title="My Peace"
+          data-caption="With you, I found the peace I never knew I needed."
+        >
+          <img src="p3.jpeg" alt="My Peace" />
+          <div class="gallery-overlay">
+            <span
+              class="text-[10px] font-label uppercase text-[#ff4ecd] tracking-widest mb-1"
+              >Vibes</span
+            >
+            <h3 class="font-headline text-base text-[#e3e0f3]">My Peace 💜</h3>
+            <p class="text-[#e3e0f3]/60 text-xs mt-1 italic">
+              With you, I found the peace I never knew I needed.
+            </p>
+          </div>
+          <div class="neon-border"></div>
+          <button
+            class="heart-btn absolute top-3 right-3 w-9 h-9 rounded-full bg-[#12121f]/70 flex items-center justify-center transition-all"
+            style="opacity: 0"
+            onclick="toggleHeart(this)"
+          >
+            <span
+              class="material-symbols-outlined text-[18px] text-[#e3e0f3]/60"
+              >favorite</span
+            >
+          </button>
+        </div>
+      </div>
+
+      <div
+        id="empty-state"
+        class="hidden text-center mt-16 text-on-surface-variant italic"
+      >
+        No moments found 💔
+      </div>
+    </section>
+
+    <!-- end of gallery -->
+
+    <!-- Content Sections for Visual Depth -->
+    <main class="relative z-10 bg-background pt-32 pb-64 px-10 md:px-32">
+      <div class="flex flex-col lg:flex-row gap-16 items-start">
+        <div class="lg:w-1/3">
+          <h2 class="font-headline text-4xl font-bold mb-8 italic">
+            A Love I Found in You 💫
+          </h2>
+          <p class="text-on-surface-variant leading-relaxed mb-8">
+            In a world full of noise, you became my quiet. Every moment with you
+            feels like a dream I never want to wake from.
+          </p>
+          <a
+            class="text-primary-container font-label uppercase tracking-widest text-xs flex items-center gap-2 group"
+            href="#"
+          >
+            Read Our Story →
+            <span
+              class="material-symbols-outlined group-hover:translate-x-2 transition-transform"
+              data-icon="arrow_right_alt"
+              >arrow_right_alt</span
+            >
+          </a>
+        </div>
+        <div class="lg:w-2/3 grid grid-cols-1 md:grid-cols-2 gap-8">
+          <!-- Bento Style Card -->
+          <div
+            class="group relative aspect-[4/5] rounded-xl overflow-hidden glass-panel hover:translate-y-[-8px] transition-all duration-500"
+          >
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-surface-dim via-transparent to-transparent z-10"
+            ></div>
+            <img
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              data-alt="asymmetric composition of a retro neon sign glowing purple against a dark city building"
+              src="c1.jpeg"
+            />
+            <div class="absolute bottom-0 left-0 p-8 z-20">
+              <span
+                class="text-[10px] font-label uppercase text-primary tracking-widest mb-2 block"
+                >Series 04</span
+              >
+              <h3 class="font-headline text-xl">
+                No matter what, it’s always you.
+              </h3>
+            </div>
+          </div>
+          <div class="flex flex-col gap-8">
+            <div
+              class="group relative flex-1 rounded-xl overflow-hidden glass-panel hover:translate-y-[-8px] transition-all duration-500"
+            >
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-surface-dim via-transparent to-transparent z-10"
+              ></div>
+              <img
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                data-alt="close up of raindrops on a glass surface reflecting multicolored street lights at night"
+                src="c2.jpeg"
+              />
+              <div class="absolute bottom-0 left-0 p-8 z-20">
+                <h3 class="font-headline text-lg">
+                  I see my whole world in your eyes.
+                </h3>
+              </div>
+            </div>
+            <div
+              class="group relative flex-1 rounded-xl overflow-hidden glass-panel hover:translate-y-[-8px] transition-all duration-500"
+            >
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-surface-dim via-transparent to-transparent z-10"
+              ></div>
+              <img
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                data-alt="cinematic wide shot of a lone figure walking through a foggy neon park at night"
+                src="c3.jpeg"
+              />
+              <div class="absolute bottom-0 left-0 p-8 z-20">
+                <h3 class="font-headline text-lg">
+                  Talking to you till the world disappears
+                </h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Wave Text -->
+      <section
+        class="flex justify-center items-center pt-24 pb-20 bg-background"
+      >
+        <h1 class="flex gap-1">
+          <span
+            class="inline-block text-3xl font-headline font-bold italic text-transparent bg-clip-text bg-gradient-to-r from-[#ff4ecd] to-[#7a5cff] [animation:wave_2s_ease-in-out_infinite] [animation-delay:0s]"
+            >B</span
+          >
+          <span
+            class="inline-block text-3xl font-headline font-bold italic text-transparent bg-clip-text bg-gradient-to-r from-[#ff4ecd] to-[#7a5cff] [animation:wave_2s_ease-in-out_infinite] [animation-delay:0.15s]"
+            >U</span
+          >
+          <span
+            class="inline-block text-3xl font-headline font-bold italic text-transparent bg-clip-text bg-gradient-to-r from-[#ff4ecd] to-[#7a5cff] [animation:wave_2s_ease-in-out_infinite] [animation-delay:0.3s]"
+            >I</span
+          >
+          <span
+            class="inline-block text-3xl font-headline font-bold italic text-transparent bg-clip-text bg-gradient-to-r from-[#ff4ecd] to-[#7a5cff] [animation:wave_2s_ease-in-out_infinite] [animation-delay:0.6s]"
+            >L</span
+          >
+          <span
+            class="inline-block text-3xl font-headline font-bold italic text-transparent bg-clip-text bg-gradient-to-r from-[#ff4ecd] to-[#7a5cff] [animation:wave_2s_ease-in-out_infinite] [animation-delay:0.75s]"
+            >T</span
+          >
+          <span
+            class="inline-block text-3xl font-headline font-bold italic text-transparent bg-clip-text bg-gradient-to-r from-[#ff4ecd] to-[#7a5cff] [animation:wave_2s_ease-in-out_infinite] [animation-delay:0.9s]"
+            >&nbsp;</span
+          >
+          <span
+            class="inline-block text-3xl font-headline font-bold italic text-transparent bg-clip-text bg-gradient-to-r from-[#ff4ecd] to-[#7a5cff] [animation:wave_2s_ease-in-out_infinite] [animation-delay:1.05s]"
+            >W</span
+          >
+          <span
+            class="inline-block text-3xl font-headline font-bold italic text-transparent bg-clip-text bg-gradient-to-r from-[#ff4ecd] to-[#7a5cff] [animation:wave_2s_ease-in-out_infinite] [animation-delay:1.2s]"
+            >I</span
+          >
+          <span
+            class="inline-block text-3xl font-headline font-bold italic text-transparent bg-clip-text bg-gradient-to-r from-[#ff4ecd] to-[#7a5cff] [animation:wave_2s_ease-in-out_infinite] [animation-delay:1.35s]"
+            >T</span
+          >
+          <span
+            class="inline-block text-3xl font-headline font-bold italic text-transparent bg-clip-text bg-gradient-to-r from-[#ff4ecd] to-[#7a5cff] [animation:wave_2s_ease-in-out_infinite] [animation-delay:1.5s]"
+            >H</span
+          >
+          <span
+            class="inline-block text-3xl font-headline font-bold italic text-transparent bg-clip-text bg-gradient-to-r from-[#ff4ecd] to-[#7a5cff] [animation:wave_2s_ease-in-out_infinite] [animation-delay:0s]"
+            >&nbsp;</span
+          >
+          <span
+            class="inline-block text-3xl font-headline font-bold italic text-transparent bg-clip-text bg-gradient-to-r from-[#ff4ecd] to-[#7a5cff] [animation:wave_2s_ease-in-out_infinite] [animation-delay:0.15s]"
+            >L</span
+          >
+          <span
+            class="inline-block text-3xl font-headline font-bold italic text-transparent bg-clip-text bg-gradient-to-r from-[#ff4ecd] to-[#7a5cff] [animation:wave_2s_ease-in-out_infinite] [animation-delay:0.3s]"
+            >O</span
+          >
+          <span
+            class="inline-block text-3xl font-headline font-bold italic text-transparent bg-clip-text bg-gradient-to-r from-[#ff4ecd] to-[#7a5cff] [animation:wave_2s_ease-in-out_infinite] [animation-delay:0.6s]"
+            >V</span
+          >
+          <span
+            class="inline-block text-3xl font-headline font-bold italic text-transparent bg-clip-text bg-gradient-to-r from-[#ff4ecd] to-[#7a5cff] [animation:wave_2s_ease-in-out_infinite] [animation-delay:0.75s]"
+            >E</span
+          >
+          <span
+            class="inline-block text-3xl font-headline font-bold italic text-transparent bg-clip-text bg-gradient-to-r from-[#ff4ecd] to-[#7a5cff] [animation:wave_2s_ease-in-out_infinite] [animation-delay:0.9s]"
+            >💖,</span
+          >
+          <span
+            class="inline-block text-3xl font-headline font-bold italic text-transparent bg-clip-text bg-gradient-to-r from-[#ff4ecd] to-[#7a5cff] [animation:wave_2s_ease-in-out_infinite] [animation-delay:0.9s]"
+            >&nbsp;</span
+          >
+          <span
+            class="inline-block text-3xl font-headline font-bold italic text-transparent bg-clip-text bg-gradient-to-r from-[#ff4ecd] to-[#7a5cff] [animation:wave_2s_ease-in-out_infinite] [animation-delay:1.05s]"
+            >J</span
+          >
+          <span
+            class="inline-block text-3xl font-headline font-bold italic text-transparent bg-clip-text bg-gradient-to-r from-[#ff4ecd] to-[#7a5cff] [animation:wave_2s_ease-in-out_infinite] [animation-delay:1.2s]"
+            >U</span
+          >
+          <span
+            class="inline-block text-3xl font-headline font-bold italic text-transparent bg-clip-text bg-gradient-to-r from-[#ff4ecd] to-[#7a5cff] [animation:wave_2s_ease-in-out_infinite] [animation-delay:1.35s]"
+            >S</span
+          >
+          <span
+            class="inline-block text-3xl font-headline font-bold italic text-transparent bg-clip-text bg-gradient-to-r from-[#ff4ecd] to-[#7a5cff] [animation:wave_2s_ease-in-out_infinite] [animation-delay:1.5s]"
+            >T</span
+          >
+          <span
+            class="inline-block text-3xl font-headline font-bold italic text-transparent bg-clip-text bg-gradient-to-r from-[#ff4ecd] to-[#7a5cff] [animation:wave_2s_ease-in-out_infinite] [animation-delay:0.9s]"
+            >&nbsp;</span
+          >
+          <span
+            class="inline-block text-3xl font-headline font-bold italic text-transparent bg-clip-text bg-gradient-to-r from-[#ff4ecd] to-[#7a5cff] [animation:wave_2s_ease-in-out_infinite] [animation-delay:1.05s]"
+            >F</span
+          >
+          <span
+            class="inline-block text-3xl font-headline font-bold italic text-transparent bg-clip-text bg-gradient-to-r from-[#ff4ecd] to-[#7a5cff] [animation:wave_2s_ease-in-out_infinite] [animation-delay:1.2s]"
+            >O</span
+          >
+          <span
+            class="inline-block text-3xl font-headline font-bold italic text-transparent bg-clip-text bg-gradient-to-r from-[#ff4ecd] to-[#7a5cff] [animation:wave_2s_ease-in-out_infinite] [animation-delay:1.35s]"
+            >R</span
+          >
+          <span
+            class="inline-block text-3xl font-headline font-bold italic text-transparent bg-clip-text bg-gradient-to-r from-[#ff4ecd] to-[#7a5cff] [animation:wave_2s_ease-in-out_infinite] [animation-delay:1.5s]"
+            >&nbsp;</span
+          >
+          <span
+            class="inline-block text-3xl font-headline font-bold italic text-transparent bg-clip-text bg-gradient-to-r from-[#ff4ecd] to-[#7a5cff] [animation:wave_2s_ease-in-out_infinite] [animation-delay:0.9s]"
+            >Y</span
+          >
+          <span
+            class="inline-block text-3xl font-headline font-bold italic text-transparent bg-clip-text bg-gradient-to-r from-[#ff4ecd] to-[#7a5cff] [animation:wave_2s_ease-in-out_infinite] [animation-delay:1.05s]"
+            >0</span
+          >
+          <span
+            class="inline-block text-3xl font-headline font-bold italic text-transparent bg-clip-text bg-gradient-to-r from-[#ff4ecd] to-[#7a5cff] [animation:wave_2s_ease-in-out_infinite] [animation-delay:1.2s]"
+            >U</span
+          >
+        </h1>
+      </section>
+    </main>
+    <!-- ripple-->
+    <div class="cursor-ripple"></div>
+    <script>
+      const slides = document.querySelectorAll(".hero-slide");
+      const progressBar = document.getElementById("progress-bar");
+      const previewCards = document.querySelectorAll(".preview-card");
+      const dots = document.querySelectorAll("[data-target]");
+      let currentSlide = 0;
+      let slideInterval;
+
+      function updateSlider(index) {
+        // Remove active classes
+        slides.forEach((slide) => {
+          slide.classList.remove("opacity-100", "z-10", "active-slide-zoom");
+          slide.classList.add("opacity-0", "z-0", "scale-110");
+        });
+
+        previewCards.forEach((card) => {
+          const inner = card.querySelector("div");
+          inner.classList.remove(
+            "border-primary",
+            "scale-110",
+            "shadow-[0_0_20px_#ff4ecd44]",
+          );
+          card.classList.add("opacity-60");
+          card.querySelector("span").classList.remove("text-primary");
+          card.querySelector("span").classList.add("text-on-surface-variant");
+        });
+
+        dots.forEach((dot) => {
+          dot.classList.remove("bg-primary", "shadow-[0_0_10px_#ff4ecd]");
+          dot.classList.add("bg-on-surface/20");
+        });
+
+        // Set new active slide
+        currentSlide = index;
+        const activeSlide = slides[currentSlide];
+        activeSlide.classList.remove("opacity-0", "z-0", "scale-110");
+        activeSlide.classList.add("opacity-100", "z-10", "active-slide-zoom");
+
+        // Set active preview
+        const activePreview = document.querySelector(
+          `.preview-card[data-target="${currentSlide + 1}"]`,
+        );
+        if (activePreview) {
+          const inner = activePreview.querySelector("div");
+          inner.classList.add(
+            "border-primary",
+            "scale-110",
+            "shadow-[0_0_20px_#ff4ecd44]",
+          );
+          activePreview.classList.remove("opacity-60");
+          activePreview
+            .querySelector("span")
+            .classList.remove("text-on-surface-variant");
+          activePreview.querySelector("span").classList.add("text-primary");
+        }
+
+        // Set active dot
+        const activeDot = document.querySelector(
+          `button[data-target="${currentSlide + 1}"]`,
+        );
+        if (activeDot) {
+          activeDot.classList.remove("bg-on-surface/20");
+          activeDot.classList.add("bg-primary", "shadow-[0_0_10px_#ff4ecd]");
+        }
+
+        // Reset and start progress bar
+        resetProgressBar();
+      }
+
+      function resetProgressBar() {
+        progressBar.style.transition = "none";
+        progressBar.style.width = "0%";
+        // Force reflow
+        void progressBar.offsetWidth;
+        progressBar.style.transition = "width 4s linear";
+        progressBar.style.width = "100%";
+      }
+
+      function nextSlide() {
+        let next = (currentSlide + 1) % slides.length;
+        updateSlider(next);
+      }
+
+      function startAutoSlide() {
+        resetProgressBar();
+        slideInterval = setInterval(nextSlide, 4000);
+      }
+
+      function resetInterval() {
+        clearInterval(slideInterval);
+        startAutoSlide();
+      }
+
+      // Event Listeners
+      previewCards.forEach((card) => {
+        card.addEventListener("click", () => {
+          const target = parseInt(card.getAttribute("data-target")) - 1;
+          updateSlider(target);
+          resetInterval();
+        });
+      });
+
+      dots.forEach((dot) => {
+        dot.addEventListener("click", () => {
+          const target = parseInt(dot.getAttribute("data-target")) - 1;
+          updateSlider(target);
+          resetInterval();
+        });
+      });
+
+      // Initialize
+      startAutoSlide();
+
+      // ----------- HEART -----------
+      function toggleHeart(btn) {
+        btn.classList.toggle("liked");
+        const icon = btn.querySelector(".material-symbols-outlined");
+        if (btn.classList.contains("liked")) {
+          icon.style.color = "#ff4ecd";
+          icon.style.fontVariationSettings =
+            '"FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24';
+          btn.style.opacity = "1";
+        } else {
+          icon.style.color = "rgba(227,224,243,0.6)";
+          icon.style.fontVariationSettings =
+            '"FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24';
+        }
+      }
+
+     
+      //  ripple js
+
+      const cursor = document.querySelector(".cursor-ripple");
+
+      document.addEventListener("mousemove", (e) => {
+        cursor.style.top = e.clientY + "px";
+        cursor.style.left = e.clientX + "px";
+      });
+
+      document.addEventListener("click", () => {
+        cursor.classList.add("ripple-click");
+
+        setTimeout(() => {
+          cursor.classList.remove("ripple-click");
+        }, 600);
+      });
+
+       // Load navbar
+      fetch("navbar.html")
+        .then((response) => response.text())
+        .then((data) => {
+          document.getElementById("navbar").innerHTML = data;
+        });
+
+    
+// Simple Login Protection
+function checkAuth() {
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+  const loginTime = localStorage.getItem("loginTime");
+
+  // Auto logout after 7 days (optional)
+  if (loginTime && Date.now() - loginTime > 7 * 24 * 60 * 60 * 1000) {
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("loginTime");
+  }
+
+  if (!isLoggedIn) {
+    window.location.href = "login.html";
+  }
+}
+
+// Run protection on page load
+document.addEventListener("DOMContentLoaded", checkAuth);
+
+    </script>
+  </body>
+</html>

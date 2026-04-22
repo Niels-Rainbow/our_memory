@@ -1,0 +1,379 @@
+<!doctype html>
+<html class="dark" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Neon Love • Our Plans 💖</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#ffaede",
+              "primary-container": "#ff4ecd",
+              secondary: "#c9beff",
+              surface: "#12121f",
+              "on-surface": "#e3e0f3",
+              "on-surface-variant": "#dcbecd",
+              background: "#12121f",
+            },
+            borderRadius: { DEFAULT: "1rem", lg: "2rem", xl: "3rem", full: "9999px" },
+            fontFamily: { headline: ["Noto Serif"], body: ["Manrope"], label: ["Manrope"] },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+      }
+
+      .glass-panel {
+        backdrop-filter: blur(20px);
+        background: rgba(18, 18, 31, 0.85);
+        border: 1px solid rgba(255, 78, 205, 0.15);
+      }
+
+      /* Clean Outer Border Line Only */
+      .plan-card {
+        position: relative;
+        background: #1f1e2b;
+        border-radius: 1.75rem;
+        overflow: hidden;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      /* Outer Border Line */
+      .plan-card::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border: 2px solid transparent;
+        border-radius: 1.75rem;
+        background: linear-gradient(135deg, #ff4ecd, #e879f9, #a78bfa) border-box;
+        -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+        mask-composite: exclude;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+      }
+
+      .plan-card:hover::before {
+        opacity: 1;
+      }
+
+      /* Light text enhancement */
+      .plan-card:hover h3 {
+        color: #ffe4f0;
+      }
+      .plan-card:hover .countdown {
+        color: #fce7f3;
+      }
+
+      .delete-btn {
+        transition: opacity 0.4s ease;
+      }
+      .plan-card:hover .delete-btn {
+        opacity: 1;
+      }
+
+      .countdown {
+        font-variant-numeric: tabular-nums;
+      }
+
+      .cursor-ripple {
+        position: fixed;
+        top: 0; left: 0;
+        width: 20px; height: 20px;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        background: radial-gradient(circle, #ff4ecd, #7a5cff);
+        box-shadow: 0 0 10px #ff4ecd, 0 0 20px #7a5cff, 0 0 40px #ff4ecd;
+        transform: translate(-50%, -50%);
+        transition: transform 0.08s ease-out;
+      }
+
+      .ripple-click {
+        animation: rippleEffect 0.6s ease-out;
+      }
+
+      @keyframes rippleEffect {
+        0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        100% { transform: translate(-50%, -50%) scale(4); opacity: 0; }
+      }
+    </style>
+  </head>
+  <body class="bg-background text-on-surface font-body overflow-x-hidden">
+
+    <!-- Top Navigation Bar -->
+    <div id="navbar"></div>
+
+    <!-- Side Navigation Bar -->
+    <aside class="hidden md:flex fixed left-0 top-0 h-full w-20 hover:w-64 transition-all duration-500 z-40 bg-[#12121f]/90 backdrop-blur-2xl flex-col py-8 shadow-[10px_0_30px_rgba(122,92,255,0.04)] group">
+      <div class="flex flex-col items-center gap-12 mt-16 w-full">
+        <div class="flex flex-col items-center gap-1 w-full px-4 group-hover:items-start group-hover:px-8">
+          <div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center mb-2">
+            <span class="material-symbols-outlined text-on-secondary-container">auto_awesome</span>
+          </div>
+          <p class="hidden group-hover:block font-label uppercase tracking-widest text-[8px] text-[#e3e0f3]/40">Our Moments</p>
+        </div>
+        <div class="flex flex-col w-full gap-4">
+          <a href="https://asadullahatik.github.io/Our_memory/index.html" class="flex items-center gap-4 w-full px-6 py-3 text-[#e3e0f3]/40 hover:text-[#ff4ecd] hover:bg-[#7a5cff]/10 transition-all duration-300">
+            <span class="material-symbols-outlined">auto_awesome</span>
+            <span class="hidden group-hover:block font-label uppercase tracking-widest text-[10px]">Home</span>
+          </a>
+          <a href="https://asadullahatik.github.io/Our_memory/gallery.html" class="flex items-center gap-4 w-full px-6 py-3 text-[#e3e0f3]/40 hover:text-[#ff4ecd] hover:bg-[#7a5cff]/10 transition-all duration-300">
+            <span class="material-symbols-outlined">photo_library</span>
+            <span class="hidden group-hover:block font-label uppercase tracking-widest text-[10px]">Moments</span>
+          </a>
+          <a href="https://asadullahatik.github.io/Our_memory/story.html" class="flex items-center gap-4 w-full px-6 py-3 text-[#e3e0f3]/40 hover:text-[#ff4ecd] hover:bg-[#7a5cff]/10 transition-all duration-300">
+            <span class="material-symbols-outlined">palette</span>
+            <span class="hidden group-hover:block font-label uppercase tracking-widest text-[10px]">Our Story</span>
+          </a>
+          <div class="flex items-center gap-4 w-full px-6 py-3 text-[#ff4ecd] bg-[#ff4ecd]/5 border-r-4 border-[#ff4ecd]">
+            <span class="material-symbols-outlined">favorite</span>
+            <span class="hidden group-hover:block font-label uppercase tracking-widest text-[10px]">Neon Love</span>
+          </div>
+        </div>
+      </div>
+      <div class="mt-auto px-4 w-full">
+        <button onclick="openAddModal()" class="w-full py-4 rounded-full bg-gradient-to-r from-[#ff4ecd] to-[#7a5cff] text-[#12121f] font-bold text-[10px] uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          Plan New Date
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="pl-0 md:pl-20 pt-28 pb-20 px-6 md:px-10 lg:px-16 max-w-7xl mx-auto">
+      <div class="text-center mb-16">
+        <h1 class="font-headline text-6xl md:text-7xl font-bold italic tracking-tight mb-4">
+          Neon <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#ff4ecd] to-[#7a5cff]">Love💜</span>
+        </h1>
+        <p class="text-on-surface-variant text-xl italic max-w-md mx-auto">Our next beautiful moments together...</p>
+      </div>
+
+      <div class="flex justify-end mb-8">
+        <button onclick="openAddModal()" 
+                class="flex items-center gap-3 bg-gradient-to-r from-[#ff4ecd] to-[#7a5cff] text-[#12121f] font-bold px-8 py-4 rounded-2xl hover:scale-105 transition-all shadow-lg">
+          <span class="material-symbols-outlined text-xl">add_circle</span>
+          <span class="uppercase tracking-widest text-sm">Plan New Date</span>
+        </button>
+      </div>
+
+      <div id="plans-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+
+      <div id="empty-state" class="hidden text-center py-20">
+        <span class="material-symbols-outlined text-[80px] text-[#ff4ecd]/30 mb-6 block">calendar_today</span>
+        <p class="text-2xl font-headline italic text-on-surface-variant">No plans yet...</p>
+        <p class="text-on-surface-variant/70 mt-2">Create your first Neon Date 💖</p>
+      </div>
+    </main>
+
+    <!-- Add Plan Modal -->
+    <div id="plan-modal" class="fixed inset-0 bg-black/90 hidden items-center justify-center z-[100]">
+      <div class="glass-panel rounded-3xl p-10 w-full max-w-lg mx-4">
+        <div class="flex justify-between items-center mb-8">
+          <h2 class="font-headline text-3xl font-bold italic">New Neon Date 💖</h2>
+          <button onclick="closeModal()" class="text-3xl hover:text-[#ff4ecd] transition-colors">×</button>
+        </div>
+
+        <div class="space-y-6">
+          <div>
+            <label class="block text-xs font-label uppercase tracking-widest text-on-surface-variant mb-2">Date Title</label>
+            <input id="plan-title" type="text" placeholder="e.g. Midnight Picnic Under Stars" 
+                   class="w-full bg-[#1f1e2b] border border-[#ff4ecd]/30 rounded-2xl px-6 py-4 focus:outline-none focus:border-[#ff4ecd]">
+          </div>
+          <div class="grid grid-cols-2 gap-6">
+            <div>
+              <label class="block text-xs font-label uppercase tracking-widest text-on-surface-variant mb-2">Date</label>
+              <input id="plan-date" type="date" class="w-full bg-[#1f1e2b] border border-[#ff4ecd]/30 rounded-2xl px-6 py-4 focus:outline-none focus:border-[#ff4ecd]">
+            </div>
+            <div>
+              <label class="block text-xs font-label uppercase tracking-widest text-on-surface-variant mb-2">Time</label>
+              <input id="plan-time" type="time" class="w-full bg-[#1f1e2b] border border-[#ff4ecd]/30 rounded-2xl px-6 py-4 focus:outline-none focus:border-[#ff4ecd]">
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs font-label uppercase tracking-widest text-on-surface-variant mb-2">Location / Note</label>
+            <textarea id="plan-location" rows="3" placeholder="Rooftop • Park • Cafe • Surprise?" 
+                      class="w-full bg-[#1f1e2b] border border-[#ff4ecd]/30 rounded-3xl px-6 py-4 focus:outline-none focus:border-[#ff4ecd]"></textarea>
+          </div>
+        </div>
+
+        <div class="flex gap-4 mt-10">
+          <button onclick="closeModal()" class="flex-1 py-4 rounded-2xl border border-[#ff4ecd]/30 hover:bg-[#ff4ecd]/10 transition-colors">Cancel</button>
+          <button onclick="savePlan()" class="flex-1 py-4 rounded-2xl bg-gradient-to-r from-[#ff4ecd] to-[#7a5cff] text-[#12121f] font-bold uppercase tracking-widest">Save This Date ✨</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ripple Cursor -->
+    <div class="cursor-ripple"></div>
+
+    <script>
+// Load navbar
+fetch('navbar.html')
+  .then(response => response.text())
+  .then(data => {
+    document.getElementById('navbar').innerHTML = data;
+  });
+      
+      let plans = JSON.parse(localStorage.getItem("neonPlans")) || [];
+
+      function renderPlans() {
+        const grid = document.getElementById("plans-grid");
+        grid.innerHTML = "";
+
+        if (plans.length === 0) {
+          document.getElementById("empty-state").classList.remove("hidden");
+          return;
+        }
+        document.getElementById("empty-state").classList.add("hidden");
+
+        plans.forEach((plan, index) => {
+          const planDate = new Date(`${plan.date}T${plan.time}`);
+          const card = document.createElement("div");
+          card.className = "plan-card p-8 group cursor-pointer";
+
+          const now = new Date();
+          let countdownHTML = planDate > now 
+            ? `<div class="mt-6 pt-6 border-t border-[#ff4ecd]/20 text-center">
+                 <div class="text-[10px] font-label uppercase tracking-widest text-on-surface-variant mb-1">COUNTDOWN</div>
+                 <div id="countdown-${index}" class="countdown text-3xl font-bold"></div>
+               </div>`
+            : `<div class="mt-6 pt-6 border-t border-[#ff4ecd]/20 text-center text-[#90da3f]">
+                 <span class="material-symbols-outlined">check_circle</span>
+                 <span class="ml-2 text-sm font-medium">This moment has arrived 💖</span>
+               </div>`;
+
+          card.innerHTML = `
+            <div class="flex justify-between items-start mb-6">
+              <span class="inline-block px-4 py-1 text-[10px] font-label uppercase tracking-widest bg-[#ff4ecd]/10 text-[#ff4ecd] rounded-full">${plan.date}</span>
+              <button onclick="deletePlan(${index}); event.stopImmediatePropagation()" 
+                      class="delete-btn opacity-0 text-[#ff4ecd]/50 hover:text-[#ff4ecd]">
+                <span class="material-symbols-outlined">delete</span>
+              </button>
+            </div>
+            <h3 class="font-headline text-2xl font-bold mb-3 leading-tight">${plan.title}</h3>
+            <p class="text-on-surface-variant text-sm line-clamp-2">${plan.location || "No location added"}</p>
+            ${countdownHTML}
+          `;
+
+          card.addEventListener("click", (e) => {
+            if (!e.target.closest("button")) {
+              alert(`💖 ${plan.title}\n\n📅 ${plan.date} at ${plan.time}\n📍 ${plan.location || "Surprise planned!"}`);
+            }
+          });
+
+          grid.appendChild(card);
+
+          if (planDate > now) startCountdown(index, planDate);
+        });
+      }
+
+      function startCountdown(index, targetDate) {
+        const el = document.getElementById(`countdown-${index}`);
+        if (!el) return;
+
+        function update() {
+          const distance = targetDate - Date.now();
+          if (distance < 0) { renderPlans(); return; }
+
+          const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+          el.textContent = `${days}d ${hours.toString().padStart(2,'0')}h ${minutes.toString().padStart(2,'0')}m ${seconds.toString().padStart(2,'0')}s`;
+        }
+
+        update();
+        setInterval(update, 1000);
+      }
+
+      function openAddModal() {
+        document.getElementById("plan-modal").classList.remove("hidden");
+        document.getElementById("plan-modal").classList.add("flex");
+        document.getElementById("plan-title").value = "";
+        document.getElementById("plan-date").value = "";
+        document.getElementById("plan-time").value = "";
+        document.getElementById("plan-location").value = "";
+      }
+
+      function closeModal() {
+        const modal = document.getElementById("plan-modal");
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+      }
+
+      function savePlan() {
+        const title = document.getElementById("plan-title").value.trim() || "Neon Date";
+        const date = document.getElementById("plan-date").value;
+        const time = document.getElementById("plan-time").value;
+        const location = document.getElementById("plan-location").value.trim();
+
+        if (!date || !time) {
+          alert("Please select date and time 💖");
+          return;
+        }
+
+        plans.unshift({ title, date, time, location });
+        localStorage.setItem("neonPlans", JSON.stringify(plans));
+        closeModal();
+        renderPlans();
+      }
+
+      function deletePlan(index) {
+        if (confirm("Delete this plan?")) {
+          plans.splice(index, 1);
+          localStorage.setItem("neonPlans", JSON.stringify(plans));
+          renderPlans();
+        }
+      }
+
+      // Ripple Cursor
+      const cursor = document.querySelector(".cursor-ripple");
+      document.addEventListener("mousemove", (e) => {
+        cursor.style.top = e.clientY + "px";
+        cursor.style.left = e.clientX + "px";
+      });
+      document.addEventListener("click", () => {
+        cursor.classList.add("ripple-click");
+        setTimeout(() => cursor.classList.remove("ripple-click"), 600);
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeModal();
+      });
+
+      renderPlans();
+
+    
+// Simple Login Protection
+function checkAuth() {
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+  const loginTime = localStorage.getItem("loginTime");
+
+  // Auto logout after 7 days (optional)
+  if (loginTime && Date.now() - loginTime > 7 * 24 * 60 * 60 * 1000) {
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("loginTime");
+  }
+
+  if (!isLoggedIn) {
+    window.location.href = "login.html";
+  }
+}
+
+// Run protection on page load
+document.addEventListener("DOMContentLoaded", checkAuth);
+
+    </script>
+  </body>
+</html>

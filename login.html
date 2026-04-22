@@ -1,0 +1,109 @@
+<!doctype html>
+<html class="dark" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Login • Our Moments 💖</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Manrope:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#ffaede",
+              "primary-container": "#ff4ecd",
+              secondary: "#c9beff",
+              surface: "#12121f",
+              "on-surface": "#e3e0f3",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .glass {
+        backdrop-filter: blur(20px);
+        background: rgba(18, 18, 31, 0.85);
+      }
+      .neon-glow {
+        box-shadow: 0 0 40px rgba(255, 78, 205, 0.4);
+      }
+    </style>
+  </head>
+  <body
+    class="bg-[#12121f] text-[#e3e0f3] font-body min-h-screen flex items-center justify-center overflow-hidden"
+  >
+    <div
+      class="glass rounded-3xl p-10 w-full max-w-md mx-4 neon-glow border border-[#ff4ecd]/20"
+    >
+      <div class="text-center mb-10">
+        <h1 class="font-headline text-5xl font-bold italic tracking-tight mb-2">
+          Our
+          <span
+            class="text-transparent bg-clip-text bg-gradient-to-r from-[#ff4ecd] to-[#7a5cff]"
+            >Moments</span
+          >
+          <span class="text-[#ff4ecd]">💖</span>
+        </h1>
+        <p class="text-[#ff4ecd]/70 italic">Enter the secret world</p>
+      </div>
+
+      <div class="space-y-6">
+        <div>
+          <label
+            class="block text-xs font-label uppercase tracking-widest mb-2 text-[#e3e0f3]/60"
+            >Password</label
+          >
+          <input
+            id="password"
+            type="password"
+            class="w-full bg-[#1f1e2b] border border-[#ff4ecd]/30 rounded-2xl px-6 py-4 focus:outline-none focus:border-[#ff4ecd] text-lg"
+            placeholder="••••••••"
+          />
+        </div>
+
+        <button
+          onclick="login()"
+          class="w-full py-4 rounded-2xl bg-gradient-to-r from-[#ff4ecd] to-[#7a5cff] text-[#12121f] font-bold text-lg tracking-widest hover:scale-105 transition-all"
+        >
+          Unlock Our Love ✨
+        </button>
+
+        <p id="error" class="text-red-400 text-center text-sm hidden"></p>
+      </div>
+
+      <p class="text-center text-[10px] text-[#e3e0f3]/40 mt-8">
+        Only for us two 💕
+      </p>
+    </div>
+
+    <script>
+      const CORRECT_PASSWORD = "ourlove2025"; // ← CHANGE THIS TO YOUR SECRET PASSWORD
+
+      function login() {
+        const pass = document.getElementById("password").value.trim();
+        const errorEl = document.getElementById("error");
+
+        if (pass === CORRECT_PASSWORD) {
+          localStorage.setItem("isLoggedIn", "true");
+          localStorage.setItem("loginTime", Date.now());
+          window.location.href = "index.html";
+        } else {
+          errorEl.textContent = "Wrong password 💔 Try again...";
+          errorEl.classList.remove("hidden");
+          setTimeout(() => errorEl.classList.add("hidden"), 3000);
+        }
+      }
+
+      // Allow pressing Enter
+      document.getElementById("password").addEventListener("keypress", (e) => {
+        if (e.key === "Enter") login();
+      });
+    </script>
+  </body>
+</html>
